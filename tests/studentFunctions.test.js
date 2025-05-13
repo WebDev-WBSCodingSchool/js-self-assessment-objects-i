@@ -1,10 +1,5 @@
 import { test, expect } from '@playwright/test';
-import {
-  destructureCuckoo,
-  getDaysUntilHalloween,
-  pickRandomElement,
-  decrementOrRemoveFromShoppingCart,
-} from '../src/studentFunctions.js';
+import { destructureCuckoo, getDaysUntilHalloween, pickRandomElement } from '../src/studentFunctions.js';
 
 test.describe('pickRandomElement()', () => {
   test.skip(
