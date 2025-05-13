@@ -1,9 +1,17 @@
 import { test, expect } from '@playwright/test';
-import { destructureCuckoo, getDaysUntilHalloween, pickRandomElement } from '../src/studentFunctions.js';
+import {
+  destructureCuckoo,
+  getDaysUntilHalloween,
+  pickRandomElement,
+  decrementOrRemoveFromShoppingCart,
+} from '../src/studentFunctions.js';
 
 test.describe('pickRandomElement()', () => {
-  test.skip(pickRandomElement() === 'NOT IMPLEMENTED', 'pickRandomElement() is not implemented');
-  const cases = [[1, 2, 3, 4, 5, 6, 7, 8, 9, 10], [], ['Cheescake Smurfs', 123, 'Noisette', 'Vanilla', Math.PI, null]];
+  test.skip(
+    pickRandomElement([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]) === 'NOT IMPLEMENTED',
+    'pickRandomElement() is not implemented'
+  );
+  const cases = [[1, 2, 3, 4, 5, 6, 7, 8, 9, 10], [], ['Cheesecake Smurfs', 123, 'Noisette', 'Vanilla', Math.PI, null]];
 
   for (let i = 0; i < cases.length; i++) {
     test(`Returns random element - Case ${i + 1}`, () => {
@@ -65,7 +73,7 @@ test.describe('pickRandomElement()', () => {
 });
 
 test.describe('getDaysUntilHalloween()', () => {
-  test.skip(getDaysUntilHalloween() === 'NOT IMPLEMENTED', 'getDaysUntilHalloween() is not implemented');
+  test.skip(getDaysUntilHalloween('2025-10-29') === 'NOT IMPLEMENTED', 'getDaysUntilHalloween() is not implemented');
   const cases = [
     ['2025-10-29', 2],
     ['1999-10-31', 0],
@@ -90,7 +98,19 @@ test.describe('getDaysUntilHalloween()', () => {
 });
 
 test.describe('destructureCuckoo()', () => {
-  test.skip(destructureCuckoo() === 'NOT IMPLEMENTED', 'destructureCuckoo() is not implemented');
+  test.skip(
+    destructureCuckoo({
+      twigs: {
+        twigs: {
+          twigs: {
+            cuckoo: 2,
+            other: 'stuff',
+          },
+        },
+      },
+    }) === 'NOT IMPLEMENTED',
+    'destructureCuckoo() is not implemented'
+  );
   const cases = [
     {
       description: 'Original nest structure',
