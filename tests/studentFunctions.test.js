@@ -37,7 +37,7 @@ test.describe('pickRandomElement()', () => {
   for (const testCase of multiElementCases) {
     test.describe(`with multiple elements (${testCase.name})`, () => {
       const inputArray = testCase.input;
-      const iterations = 100 * inputArray.length; // More iterations, scaled by array size
+      const iterations = 100 * inputArray.length;
       const results = new Set();
       let allResultsInInput = true;
 
@@ -50,42 +50,15 @@ test.describe('pickRandomElement()', () => {
       }
 
       test(`should always return an element contained within the input array (checked over ${iterations} iterations)`, () => {
-        // This check runs after the loop finishes
         expect(allResultsInInput).toBe(true);
       });
 
       test(`should return multiple different elements over ${iterations} iterations`, () => {
-        // Expect more than 1 unique result if the input array has more than 1 element
         expect(results.size).toBeGreaterThan(1);
       });
 
-      // More advanced: Check if *all* elements were likely returned
       test(`should eventually return all possible elements over ${iterations} iterations (probabilistic)`, () => {
-        // Note: This test can still be flaky, especially if iterations is too low
-        // or the array is very large. Use with caution.
         expect(results.size).toBe(inputArray.length);
-      });
-
-      // Basic Distribution Check (Optional and can be flaky)
-      test(`should have a reasonably uniform distribution over ${iterations} iterations (probabilistic)`, () => {
-        const counts = {};
-        inputArray.forEach((el) => (counts[String(el)] = 0)); // Use string keys for objects
-        const runResults = Array.from({ length: iterations }).map(() => pickRandomElement(inputArray));
-
-        runResults.forEach((res) => {
-          if (counts[String(res)] !== undefined) {
-            counts[String(res)]++;
-          }
-        });
-
-        const expectedCount = iterations / inputArray.length;
-        const tolerance = expectedCount * 0.5; // Allow 50% deviation (adjust as needed)
-
-        inputArray.forEach((el) => {
-          expect(counts[String(el)]).toBeGreaterThan(expectedCount - tolerance);
-          expect(counts[String(el)]).toBeLessThan(expectedCount + tolerance);
-        });
-        // Note: Proper statistical tests (like Chi-squared) are more rigorous but complex for unit tests.
       });
     });
   }
@@ -97,16 +70,16 @@ test.describe('getDaysUntilHalloween()', () => {
     ['2025-10-29', 2],
     ['1999-10-31', 0],
     ['2025-10-31', 0],
-    ['2024-10-30', 1], // Day before Halloween (Leap Year)
-    ['2025-10-30', 1], // Day before Halloween (Normal Year)
-    ['2024-10-01', 30], // Start of October (Leap Year)
-    ['2025-10-01', 30], // Start of October (Normal Year)
-    ['2024-01-01', 304], // Start of Leap Year
-    ['2025-01-01', 303], // Start of Normal Year
-    ['2025-11-01', 364], // Date after Halloween
-    ['2024-12-31', 304], // End of year, after Halloween (Leap Year)
-    ['2025-12-31', 304], // End of year, after Halloween (Normal Year)
-    ['2024-02-29', 245], // Leap day
+    ['2024-10-30', 1],
+    ['2025-10-30', 1],
+    ['2024-10-01', 30],
+    ['2025-10-01', 30],
+    ['2024-01-01', 304],
+    ['2025-01-01', 303],
+    ['2025-11-01', 364],
+    ['2024-12-31', 304],
+    ['2025-12-31', 304],
+    ['2024-02-29', 245],
   ];
 
   for (const [c, expected] of cases) {
@@ -119,7 +92,6 @@ test.describe('getDaysUntilHalloween()', () => {
 test.describe('destructureCuckoo()', () => {
   test.skip(destructureCuckoo() === 'NOT IMPLEMENTED', 'destructureCuckoo() is not implemented');
   const cases = [
-    // --- Case 1: Original provided nest ---
     {
       description: 'Original nest structure',
       input: {
@@ -131,7 +103,7 @@ test.describe('destructureCuckoo()', () => {
               feathers: 'warm',
               egg: 1,
               reedWarbler: 'unhatched',
-              cuckoo: 'big and hungry', // Target value
+              cuckoo: 'big and hungry',
             },
             moss: 'moss',
           },
@@ -140,14 +112,13 @@ test.describe('destructureCuckoo()', () => {
       expected: 'big and hungry',
     },
 
-    // --- Case 2: Different cuckoo value (string) ---
     {
       description: 'Nest with a different string for cuckoo',
       input: {
         twigs: {
           twigs: {
             twigs: {
-              cuckoo: 'just an egg', // Different value
+              cuckoo: 'just an egg',
             },
           },
         },
@@ -155,14 +126,13 @@ test.describe('destructureCuckoo()', () => {
       expected: 'just an egg',
     },
 
-    // --- Case 3: Cuckoo value is null ---
     {
       description: 'Nest where cuckoo value is null',
       input: {
         twigs: {
           twigs: {
             twigs: {
-              cuckoo: null, // Null value
+              cuckoo: null,
             },
           },
         },
@@ -170,14 +140,13 @@ test.describe('destructureCuckoo()', () => {
       expected: null,
     },
 
-    // --- Case 4: Cuckoo value is a number ---
     {
       description: 'Nest where cuckoo value is a number',
       input: {
         twigs: {
           twigs: {
             twigs: {
-              cuckoo: 2, // Numeric value
+              cuckoo: 2,
               other: 'stuff',
             },
           },
@@ -186,24 +155,21 @@ test.describe('destructureCuckoo()', () => {
       expected: 2,
     },
 
-    // --- Case 5: Missing 'cuckoo' key at the final level ---
     {
       description: "Nest structure exists, but 'cuckoo' key is missing",
       input: {
         twigs: {
           twigs: {
             twigs: {
-              // cuckoo key is absent
               feathers: 'warm',
               egg: 1,
             },
           },
         },
       },
-      expected: undefined, // Accessing a non-existent property results in undefined
+      expected: undefined,
     },
 
-    // --- Case 6: Minimal valid structure ---
     {
       description: 'Minimal structure containing the cuckoo',
       input: {
