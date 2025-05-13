@@ -1,0 +1,15 @@
+{
+  "name": "javascript-self-assessment-template",
+  "version": "1.0.0",
+  "description": "Student self‑assessment skeleton for JavaScript fundamentals",
+  "type": "commonjs",
+  "scripts": {
+    "test": "npx playwright test --reporter=list"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.44.0"
+  },
+  "engines": {
+    "node": ">22.0.0"
+  }
+}
