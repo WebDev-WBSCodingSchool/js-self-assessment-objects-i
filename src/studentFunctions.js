@@ -6,5 +6,6 @@
 import pickRandomElement from './pickRandomElement.js';
 import getDaysUntilHalloween from './getDaysUntilHalloween.js';
 import destructureCuckoo from './destructureCuckoo.js';
+import createObjectFromTuples from './createObjectFromTuples.js';
 
-export { pickRandomElement, getDaysUntilHalloween, destructureCuckoo };
+export { pickRandomElement, getDaysUntilHalloween, destructureCuckoo, createObjectFromTuples };

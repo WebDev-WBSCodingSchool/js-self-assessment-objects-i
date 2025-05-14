@@ -1,5 +1,10 @@
 import { test, expect } from '@playwright/test';
-import { destructureCuckoo, getDaysUntilHalloween, pickRandomElement } from '../src/studentFunctions.js';
+import {
+  createObjectFromTuples,
+  destructureCuckoo,
+  getDaysUntilHalloween,
+  pickRandomElement,
+} from '../src/studentFunctions.js';
 
 test.describe('pickRandomElement()', () => {
   test.skip(
@@ -234,6 +239,99 @@ test.describe('destructureCuckoo()', () => {
   for (const { description, input } of errorCases) {
     test(description, () => {
       expect(destructureCuckoo(input)).toBeUndefined();
+    });
+  }
+});
+
+test.describe('createObjectFromTuples()', () => {
+  test.skip(createObjectFromTuples([[1, 2]]) === 'NOT IMPLEMENTED', 'createObjectFromTuples() is not implemented');
+  const sym = Symbol('symbolic');
+  const sym2 = Symbol('symbolic');
+  const cases = [
+    {
+      description: 'String is Key',
+      input: [['one', 1]],
+      expected: { one: 1 },
+    },
+    {
+      description: 'Number is Key',
+      input: [[1, 1]],
+      expected: { 1: 1 },
+    },
+    {
+      description: 'null is Key',
+      input: [[null, 1]],
+      expected: { null: 1 },
+    },
+    {
+      description: 'Empty string is Key',
+      input: [['', 1]],
+      expected: { '': 1 },
+    },
+    {
+      description: 'Duplicate Key',
+      input: [
+        ['one', 1],
+        ['one', 'Oh, noo!'],
+      ],
+      expected: { one: 1 },
+    },
+    {
+      description: 'Object is key',
+      input: [
+        ['one', 1],
+        [{ bla: 42 }, 42],
+        ['one', 'Oh, noo!'],
+      ],
+      expected: { one: 1 },
+    },
+    {
+      description: 'Symbol is key',
+      input: [
+        [sym, 1],
+        ['symbolic', 'telling!'],
+        [sym2, true],
+      ],
+      expected: { [sym]: 1, symbolic: 'telling!', [sym2]: true },
+    },
+    {
+      description: 'Array is key',
+      input: [
+        [[1, 2, 3], 1],
+        ['symbolic', 'telling!'],
+        [[1, 2, 3], 'Oh, no!'],
+      ],
+      expected: { '1,2,3': 1, symbolic: 'telling!' },
+    },
+    {
+      description: 'Boolean is keys',
+      input: [
+        [true, 'isTrue'],
+        [false, 'isFalse'],
+      ],
+      expected: { true: 'isTrue', false: 'isFalse' },
+    },
+    {
+      description: 'Undefined is keys',
+      input: [
+        [undefined, 'undefined is a fine key'],
+        [false, 'isFalse'],
+        [undefined, 'isFalseAlso'],
+      ],
+      expected: { undefined: 'undefined is a fine key', false: 'isFalse' },
+    },
+    {
+      description: 'Empty array input',
+      input: [],
+      expected: {},
+    },
+  ];
+
+  for (const { description, input, expected } of cases) {
+    test(description, () => {
+      expect(createObjectFromTuples(input), `${JSON.stringify(input)} -> ${JSON.stringify(expected)}`).toEqual(
+        expected
+      );
     });
   }
 });
